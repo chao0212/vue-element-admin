@@ -47,11 +47,27 @@ const mutations = {
 }
 
 const actions = {
+  // 生成角色可访问的路由
   generateRoutes({ commit }, roles) {
+    console.log(roles)
     return new Promise(resolve => {
       let accessedRoutes
+      // const arr = []
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
+
+        // for (const route of asyncRoutes){
+        //   if(route.hasOwnProperty("meta")){
+        //     if(route.meta.hasOwnProperty("roles")){
+        //       if(route.meta.roles.includes("admin")){
+        //           arr.push(route)
+        //       }
+        //     }else{//没有roles属性的route，角色
+        //       arr.push(route)
+        //     }
+        //   }
+        // }
+        // accessedRoutes = arr
       } else {
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }

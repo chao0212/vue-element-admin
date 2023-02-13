@@ -53,7 +53,7 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
+    hidden: true // hidden为true时，路由不会在侧边栏出现
   },
   {
     path: '/auth-redirect',
@@ -130,15 +130,50 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
+    path: '/',
+    component: Layout,
+    redirect: '/index',
+    children: [
+      {
+        path: 'xmind2excel',
+        component: () => import('@/views/xmind2excel/index'),
+        name: 'xmind2excel',
+        meta: { title: 'xmind转excel测试用例', icon: 'list', affix: true }
+      }
+    ]
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
+    // redirect: 'noRedirect',  //noRedirect:该路由在面包屑导航中不可被点击,不设置点击对应面包屑导航时显示空白
+    // alwaysShow控制当路由的children只有一个时，是否将子路由当作根路由显示，true一直显示根路由，在子路由只有一个时不会显示为根路由，
+    // false子路由只有一个时，不显示子路由，将其显示为根路由
+    alwaysShow: true, // will always show the root menu 子路由只有一个时，显示根路由及子路由
     name: 'Permission',
     meta: {
-      title: 'Permission',
+      title: 'Permission权限', // 设置该路由在侧边栏和面包屑中展示的名字
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
+
+      // breadcrumb: false //  如果设置为false，则不会在breadcrumb面包屑中显示(默认 true)
+      // affix: true // 如果设置为true，它则会固定在tags-view中(默认 false)
+      // activeMenu: '/permission/page' //?
     },
     children: [
       {
